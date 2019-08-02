@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
+import "../assests/css/Button.css";
 import "../assests/css/Form.css";
 
 class LoginPage extends Component {
@@ -15,6 +16,7 @@ class LoginPage extends Component {
       isLoggedIn: false
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -22,6 +24,10 @@ class LoginPage extends Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+  }
+  handleClick() {
+    let path = `/`;
+    this.props.history.push(path);
   }
 
   handleSubmit(event) {
@@ -34,18 +40,22 @@ class LoginPage extends Component {
       })
       .then(function(response) {
         localStorage.setItem("token", JSON.stringify(response.data));
-        self.setState({ isLoggedIn: true });
+        self.setState({
+          isLoggedIn: true,
+          token: JSON.stringify(response.data)
+        });
         alert("Giriş Başarılı");
       })
       .catch(function(error) {
         if (error.response.status === 500) {
-          alert("Username or Password False");
+          alert("Kullanıcı Adı ya da Parola Hatalı!");
         } else alert(error.response.status);
       });
   }
 
   render() {
-    if (this.state.isLoggedIn === true) {
+    if (localStorage.getItem("token") !== null) {
+      alert("Zaten Giriş Yapıldı. Çıkış Yapıp Tekrar Deneyiniz.");
       return <Redirect to='/' />;
     }
     return (
@@ -69,6 +79,10 @@ class LoginPage extends Component {
             />
             <button className='form-submit' onClick={this.handleSubmit}>
               SUBMIT
+            </button>
+            <br />
+            <button className='form-button' onClick={this.handleClick}>
+              Go To Home Page
             </button>
           </form>
         </div>

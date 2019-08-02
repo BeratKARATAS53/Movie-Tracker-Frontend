@@ -1,9 +1,24 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import "../assests/css/Form.css";
+import "../assests/css/Button.css";
 
 export default class HomePage extends Component {
+  constructor() {
+    super();
+    this.state = { route: "" };
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleLogout() {
+    localStorage.clear();
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
   render() {
     return (
       <div className='topCenter mx-5 px-5 mt-md-2'>
@@ -11,24 +26,71 @@ export default class HomePage extends Component {
           className='row-4 h-25 w-100 text-center align-middle border'
           style={{ cursor: "pointer", fontSize: 20 }}
         >
-          <Link className='font-item' style={{ marginLeft: 100 }} to='/'>
+          <button
+            className='navbar-button'
+            style={{ margin: 25 }}
+            onClick={() => {
+              this.props.history.push("/");
+            }}
+          >
             Home
-          </Link>
-          <Link style={{ marginLeft: 100 }} to='/rest/login'>
+          </button>
+          <button
+            className='navbar-button'
+            style={{ margin: 25 }}
+            onClick={() => {
+              this.props.history.push("/rest/login");
+            }}
+          >
             Login
-          </Link>
-          <Link style={{ marginLeft: 100 }} to='/rest/register'>
-            Register
-          </Link>
-          <Link style={{ marginLeft: 100 }} to='/rest/users'>
-            Users
-          </Link>
-          <Link style={{ marginLeft: 100 }} to='/rest/movies'>
+          </button>
+          <button
+            className='navbar-button'
+            style={{ margin: 25 }}
+            onClick={() => {
+              this.props.history.push("/rest/users/add");
+            }}
+          >
+            Add User
+          </button>
+          <button
+            className='navbar-button'
+            style={{ margin: 25 }}
+            onClick={() => {
+              this.props.history.push("/rest/movies");
+            }}
+          >
             Movies
-          </Link>
-          <Link style={{ marginLeft: 100 }} to='/rest/directors'>
+          </button>
+          <button
+            className='navbar-button'
+            style={{ margin: 25 }}
+            onClick={() => {
+              this.props.history.push("/rest/users");
+            }}
+          >
+            Users
+          </button>
+          <button
+            className='navbar-button'
+            style={{ margin: 25 }}
+            onClick={() => {
+              this.props.history.push("/rest/directors");
+            }}
+          >
             Directors
-          </Link>
+          </button>
+          <button
+            className='navbar-button'
+            style={{
+              margin: 25,
+              marginLeft: 350,
+              background: "linear-gradient(to right, #bc4e9c, #f80759)"
+            }}
+            onClick={this.handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </div>
     );

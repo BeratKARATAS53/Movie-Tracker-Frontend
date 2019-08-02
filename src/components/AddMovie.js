@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,9 +15,8 @@ export default class AddMovie extends Component {
       duration: "",
       directorId: 0,
       genre: "",
-      releaseDate: "",
       imdbRate: 0,
-      startDate: new Date()
+      releaseDate: new Date()
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,7 +30,7 @@ export default class AddMovie extends Component {
   }
   handleDateChange(date) {
     this.setState({
-      startDate: date
+      releaseDate: date
     });
   }
 
@@ -57,6 +57,10 @@ export default class AddMovie extends Component {
     this.props.history.push(path);
   }
   render() {
+    if (localStorage.getItem("token") === null) {
+      alert("Yetkisiz Giriş Tespit Edildi! Giriş Reddedildi.");
+      return <Redirect to='/rest/login' />;
+    }
     return (
       <div className='center'>
         <div className='card'>
@@ -72,7 +76,7 @@ export default class AddMovie extends Component {
             <h4>Release Date</h4>
             <DatePicker
               className='form-item'
-              selected={this.state.startDate}
+              selected={this.state.releaseDate}
               onChange={this.handleDateChange}
             />
             <input

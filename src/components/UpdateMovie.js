@@ -1,9 +1,11 @@
 import axios from "axios";
 
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import "../assests/css/Button.css";
 import "../assests/css/Form.css";
 
 export default class UpdateMovie extends Component {
@@ -67,6 +69,10 @@ export default class UpdateMovie extends Component {
     this.props.history.push(path);
   }
   render() {
+    if (localStorage.getItem("token") === null) {
+      alert("Yetkisiz Giriş Tespit Edildi! Giriş Reddedildi.");
+      return <Redirect to='/rest/login' />;
+    }
     return (
       <div className='center'>
         <div className='card'>

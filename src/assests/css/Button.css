@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Saira+Stencil+One&display=swap");
+
+.navbar-button {
+  font-family: "Saira Stencil One", cursive;
+  font-size: 25px;
+  height: 175px;
+  width: 20%;
+  color: #fff;
+  background: linear-gradient(to right, #00b4db, #0083b0);
+  border: none;
+  letter-spacing: 0.2rem;
+  transition: 0.3s opacity ease;
+  cursor: pointer;
+}

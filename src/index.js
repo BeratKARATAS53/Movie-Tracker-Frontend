@@ -4,12 +4,12 @@ import { Route, BrowserRouter } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
 import UsersPage from "./pages/UsersPage";
 import MoviesPage from "./pages/MoviesPage";
 import DirectorsPage from "./pages/DirectorsPage";
 
 import AddUser from "./components/AddUser";
+import GetUsers from "./components/GetUsers";
 import AddMovie from "./components/AddMovie";
 import GetMovies from "./components/GetMovies";
 import GetDirectors from "./components/GetDirectors";
@@ -24,8 +24,8 @@ ReactDOM.render(
   <BrowserRouter>
     <Route exact path='/' component={HomePage} />
     <Route path='/rest/login' component={LoginPage} />
-    <Route path='/rest/register' component={RegisterPage} />
     <Route path='/rest/users' component={UsersPage} />
+    <Route path='/rest/users/get' component={GetUsers} />
     <Route path='/rest/users/add' component={AddUser} />
     <Route path='/rest/movies' component={MoviesPage} />
     <Route path='/rest/movies/get' component={GetMovies} />

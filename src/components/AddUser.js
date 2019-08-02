@@ -1,7 +1,9 @@
 import axios from "axios";
 
+import { Redirect } from "react-router-dom";
 import React, { Component } from "react";
 
+import "../assests/css/Button.css";
 import "../assests/css/Form.css";
 
 export default class AddUser extends Component {
@@ -13,7 +15,8 @@ export default class AddUser extends Component {
       lastName: "",
       password: "",
       email: "",
-      roles: "ROLE_USER"
+      confirmPassword: "",
+      roles: [2, "ROLE_USER"]
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,22 +28,33 @@ export default class AddUser extends Component {
     });
   }
 
-  handleSubmit() {
-    axios
-      .post("http://localhost:8080/rest/users", {
-        username: this.state.username,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        password: this.state.password,
-        email: this.state.email,
-        roles: this.state.roles
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.state.password === this.state.confirmPassword) {
+      axios
+        .post("http://localhost:8080/rest/users", {
+          username: this.state.username,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          password: this.state.password,
+          email: this.state.email
+        })
+        .then(function(response) {
+          console.log(response);
+          alert("Kullanıcı Başarıyla Eklendi.");
+        })
+        .catch(function(error) {
+          if (error.response.status === 400) {
+            alert("Boş Alanları Doldurunuz Lütfen!");
+          } else if (error.response.status === 403) {
+            alert(
+              "Kullanıcı Bilgileri Zaten Alınmış. Farklı Bilgilerle Yeniden Deneyiniz!"
+            );
+          } else if (error.response.status === 500) {
+            alert("Kullanıcı Oluşturulamadı! Tekrar Deneyiniz.");
+          }
+        });
+    }
   }
 
   handleClick() {
@@ -48,6 +62,10 @@ export default class AddUser extends Component {
     this.props.history.push(path);
   }
   render() {
+    if (localStorage.getItem("token") === null) {
+      alert("Yetkisiz Giriş Tespit Edildi! Giriş Reddedildi.");
+      return <Redirect to='/rest/login' />;
+    }
     return (
       <div className='center'>
         <div className='card'>
@@ -83,19 +101,22 @@ export default class AddUser extends Component {
             />
             <input
               className='form-item'
+              placeholder='Confirm Password goes here...'
+              name='confirmPassword'
+              type='password'
+              onChange={this.handleChange}
+            />
+            <input
+              className='form-item'
               placeholder='Email Address goes here...'
               name='email'
               type='text'
               onChange={this.handleChange}
             />
-            <select className='form-item'>
+            <select className='form-item' name='roles'>
               <option>SELECT ROLE</option>
-              <option name='roles' value='2'>
-                ROLE_USER
-              </option>
-              <option name='roles' value='1'>
-                ROLE_ADMIN
-              </option>
+              <option>ROLE_USER</option>
+              <option>ROLE_ADMIN</option>
             </select>
             <input
               className='form-submit'

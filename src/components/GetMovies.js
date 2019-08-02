@@ -2,9 +2,10 @@ import React from "react";
 
 import { Table } from "react-bootstrap";
 import { FiX } from "react-icons/fi";
-import { Link } from "react-router-dom";
 
+import "../assests/css/Button.css";
 import "../assests/css/Form.css";
+import "../assests/css/Table.css";
 
 export default class GetMovies extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export default class GetMovies extends React.Component {
       return <div>{this.state.status}</div>;
     } else {
       var movies = this.state.movies.map(movie => (
-        <tr key={movie.id}>
+        <tr className='table-td' key={movie.id} style={{ textAlign: "center" }}>
           <td>{movie.id}</td>
           <td>{movie.movieName}</td>
           <td>{movie.releaseDate}</td>
@@ -42,34 +43,18 @@ export default class GetMovies extends React.Component {
           <td>{movie.duration}</td>
           <td>{movie.genre}</td>
           <td>
-            <FiX style={{ cursor: "pointer" }} onClick={this.handleClick} />
+            <FiX
+              style={{ cursor: "pointer", color: "red" }}
+              onClick={this.handleClick}
+            />
           </td>
         </tr>
-        /*
-        <Card>
-          <Card.Img variant='top' src='holder.js/100px160' />
-          <Card.Body>
-            <Card.Title>{movie.movieName}</Card.Title>
-            <Card.Text>Director Id: {movie.directorId}</Card.Text> <br />
-            <Card.Text>IMDB Rate: {movie.imdbRate}</Card.Text> <br />
-            <Card.Text>Genre: {movie.genre}</Card.Text> <br />
-            <Card.Text>Duration: {movie.duration}</Card.Text> <br />
-          </Card.Body>
-          <Card.Footer>
-            <small className='text-muted'>
-              Release Date: {movie.releaseDate}
-            </small>
-          </Card.Footer>
-        </Card>*/
       ));
       return (
         <div className='center' style={{ fontSize: 25 }}>
-          <Link style={{ marginLeft: 100 }} to='/rest/movies'>
-            Return Movie Home Page
-          </Link>
           <Table bordered hover size='sm'>
             <thead>
-              <tr>
+              <tr className='table-tr'>
                 <th> # </th>
                 <th> Movie Name </th>
                 <th> Release Date </th>
@@ -81,6 +66,20 @@ export default class GetMovies extends React.Component {
             </thead>
             <tbody>{movies}</tbody>
           </Table>
+
+          <button
+            className='navbar-button'
+            style={{
+              margin: 25,
+              height: 50,
+              background: "linear-gradient(to right, #bc4e9c, #f80759)"
+            }}
+            onClick={() => {
+              this.props.history.push("/rest/movies");
+            }}
+          >
+            Return Page
+          </button>
         </div>
       );
     }
