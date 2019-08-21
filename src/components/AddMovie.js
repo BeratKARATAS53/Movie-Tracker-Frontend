@@ -45,7 +45,7 @@ export default class AddMovie extends Component {
         imdbRate: this.state.imdbRate
       })
       .then(function(response) {
-        console.log(response);
+        alert("Movie Başarıyla eklendi.");
       })
       .catch(function(error) {
         console.log(error);

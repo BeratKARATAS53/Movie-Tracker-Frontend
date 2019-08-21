@@ -78,7 +78,7 @@ class LoginPage extends Component {
               onChange={this.handleChange}
             />
             <button className='form-submit' onClick={this.handleSubmit}>
-              SUBMIT
+              LOGIN
             </button>
             <br />
             <button className='form-button' onClick={this.handleClick}>

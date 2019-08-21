@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 import "../assests/css/Button.css";
 import "../assests/css/Form.css";
@@ -13,6 +14,10 @@ export default class MoviesPage extends React.Component {
     };
   }
   render() {
+    if (localStorage.getItem("token") === null) {
+      alert("Yetkisiz Giriş Tespit Edildi! Giriş Reddedildi.");
+      return <Redirect to='/rest/login' />;
+    }
     return (
       <div className='center' style={{ fontSize: 25 }}>
         <div className='topCenter mx-5 px-5 mt-md-2'>

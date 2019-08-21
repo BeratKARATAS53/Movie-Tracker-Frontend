@@ -42,7 +42,7 @@ export default class AddDirector extends Component {
         directorSurname: this.state.directorSurname
       })
       .then(function(response) {
-        console.log(response);
+        alert("Director Başarıyla eklendi.");
       })
       .catch(function(error) {
         console.log(error);
