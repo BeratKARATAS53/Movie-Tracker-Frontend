@@ -12,3 +12,16 @@
   transition: 0.3s opacity ease;
   cursor: pointer;
 }
+
+.btn-primary {
+  font-family: "Saira Stencil One", cursive;
+  font-size: 15px;
+  height: 25px;
+  min-width: 50px;
+  color: #555;
+  background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+  border: none;
+  letter-spacing: 0.2rem;
+  transition: 0.3s opacity ease;
+  cursor: pointer;
+}

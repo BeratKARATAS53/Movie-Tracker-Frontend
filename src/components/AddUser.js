@@ -16,7 +16,7 @@ export default class AddUser extends Component {
       password: "",
       email: "",
       confirmPassword: "",
-      roles: [2, "ROLE_USER"]
+      roles: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,12 +32,13 @@ export default class AddUser extends Component {
     event.preventDefault();
     if (this.state.password === this.state.confirmPassword) {
       axios
-        .post("http://localhost:8080/rest/users", {
+        .post("http://localhost:8030/rest/users", {
           username: this.state.username,
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           password: this.state.password,
-          email: this.state.email
+          email: this.state.email,
+          roles: this.state.roles
         })
         .then(function(response) {
           console.log(response);
@@ -47,9 +48,7 @@ export default class AddUser extends Component {
           if (error.response.status === 400) {
             alert("Boş Alanları Doldurunuz Lütfen!");
           } else if (error.response.status === 403) {
-            alert(
-              "Kullanıcı Bilgileri Zaten Alınmış. Farklı Bilgilerle Yeniden Deneyiniz!"
-            );
+            alert("Giriş Reddedildi!");
           } else if (error.response.status === 500) {
             alert("Kullanıcı Oluşturulamadı! Tekrar Deneyiniz.");
           }
@@ -113,7 +112,12 @@ export default class AddUser extends Component {
               type='text'
               onChange={this.handleChange}
             />
-            <select className='form-item' name='roles'>
+            <select
+              className='form-item'
+              name='roles'
+              value={this.state.roles}
+              onChange={this.handleChange}
+            >
               <option>SELECT ROLE</option>
               <option>ROLE_USER</option>
               <option>ROLE_ADMIN</option>

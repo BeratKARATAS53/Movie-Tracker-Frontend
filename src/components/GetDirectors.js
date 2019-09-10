@@ -13,7 +13,7 @@ export default class GetDirectors extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/rest/directors")
+    fetch("http://localhost:8030/rest/directors")
       .then(response => response.json())
       .then(data => {
         this.setState({ directors: data, status: "SUCCESS" });

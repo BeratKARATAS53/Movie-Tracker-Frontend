@@ -35,7 +35,7 @@ export default class AddDirector extends Component {
   handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:8080/rest/directors", {
+      .post("http://localhost:8030/rest/directors", {
         birthDate: this.state.birthDate,
         birthPlace: this.state.birthPlace,
         directorName: this.state.directorName,

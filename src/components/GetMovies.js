@@ -18,7 +18,7 @@ export default class GetMovies extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
-    fetch("http://localhost:8080/rest/movies")
+    fetch("http://localhost:8030/rest/movies")
       .then(response => response.json())
       .then(data => {
         this.setState({ movies: data, status: "SUCCESS" });

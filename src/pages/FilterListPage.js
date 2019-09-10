@@ -1,31 +1,32 @@
 import React from "react";
-import { FiX } from "react-icons/fi";
+
 import { Table } from "react-bootstrap";
+import { FiX } from "react-icons/fi";
 
 import "../assests/css/Button.css";
-import "../assests/css/Table.css";
 import "../assests/css/Form.css";
+import "../assests/css/Table.css";
 
-export default class GetUsers extends React.Component {
+export default class GetMovies extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { users: "", userOrMember: false, status: "LOADING" };
-
+    this.state = {
+      page: "movies",
+      movies: "",
+      status: "LOADING"
+    };
     this.handleClick = this.handleClick.bind(this);
   }
-
   componentDidMount() {
-    fetch("http://localhost:8030/rest/users")
+    fetch("http://localhost:8030/rest/search")
       .then(response => response.json())
       .then(data => {
-        this.setState({ users: data, status: "SUCCESS" });
+        this.setState({ movies: data, status: "SUCCESS" });
       });
   }
 
   handleClick() {
-    console.log("handle CLick");
-
-    let path = `/rest/movies`;
+    let path = `/`;
     this.props.history.push(path);
   }
 
@@ -33,13 +34,14 @@ export default class GetUsers extends React.Component {
     if (this.state.status !== "SUCCESS") {
       return <div>{this.state.status}</div>;
     } else {
-      var users = this.state.users.map(user => (
-        <tr key={user.id} style={{ textAlign: "center" }}>
-          <td>{user.id}</td>
-          <td>{user.username}</td>
-          <td>{user.firstName}</td>
-          <td>{user.lastName}</td>
-          <td>{user.email}</td>
+      var movies = this.state.movies.map(movie => (
+        <tr className='table-td' key={movie.id} style={{ textAlign: "center" }}>
+          <td>{movie.id}</td>
+          <td>{movie.movieName}</td>
+          <td>{movie.releaseDate}</td>
+          <td>{movie.imdbRate}</td>
+          <td>{movie.duration}</td>
+          <td>{movie.genre}</td>
           <td>
             <FiX
               style={{ cursor: "pointer", color: "red" }}
@@ -50,18 +52,19 @@ export default class GetUsers extends React.Component {
       ));
       return (
         <div className='center' style={{ fontSize: 25 }}>
-          <Table striped bordered hover size='sm'>
+          <Table bordered hover size='sm'>
             <thead>
               <tr className='table-tr'>
-                <th>#</th>
-                <th> Username </th>
-                <th> First Name </th>
-                <th> Last Name </th>
-                <th> Email </th>
+                <th> # </th>
+                <th> Movie Name </th>
+                <th> Release Date </th>
+                <th> IMDB Rate </th>
+                <th> Duration </th>
+                <th> Genre </th>
                 <th> Delete </th>
               </tr>
             </thead>
-            <tbody>{users}</tbody>
+            <tbody>{movies}</tbody>
           </Table>
 
           <button
@@ -72,7 +75,7 @@ export default class GetUsers extends React.Component {
               background: "linear-gradient(to right, #bc4e9c, #f80759)"
             }}
             onClick={() => {
-              this.props.history.push("/rest/users");
+              this.props.history.push("/");
             }}
           >
             Return Page

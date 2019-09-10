@@ -36,7 +36,7 @@ export default class AddMovie extends Component {
 
   handleSubmit() {
     axios
-      .post("http://localhost:8080/rest/movies", {
+      .post("http://localhost:8030/rest/movies", {
         movieName: this.state.movieName,
         duration: this.state.duration,
         directorId: this.state.directorId,
