@@ -35,7 +35,7 @@ ReactDOM.render(
     <Route path='/rest/directors' component={DirectorsPage} />
     <Route path='/rest/directors/get' component={GetDirectors} />
     <Route path='/rest/directors/add' component={AddDirector} />
-    <Route exact path='/rest/search' component={FilterListPage} />
+    <Route path='/rest/search' component={FilterListPage} />
   </BrowserRouter>,
   document.getElementById("root")
 );

@@ -32,7 +32,7 @@ export default class AddUser extends Component {
     event.preventDefault();
     if (this.state.password === this.state.confirmPassword) {
       axios
-        .post("http://localhost:8030/rest/users", {
+        .post("http://localhost:8080/rest/users", {
           username: this.state.username,
           firstName: this.state.firstName,
           lastName: this.state.lastName,

@@ -1,5 +1,5 @@
 import React from "react";
-import { FiX } from "react-icons/fi";
+import { FiPenTool, FiTrash2 } from "react-icons/fi";
 import { Table } from "react-bootstrap";
 
 import "../assests/css/Table.css";
@@ -13,11 +13,22 @@ export default class GetDirectors extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8030/rest/directors")
+    fetch("http://localhost:8080/rest/directors")
       .then(response => response.json())
       .then(data => {
         this.setState({ directors: data, status: "SUCCESS" });
       });
+  }
+
+  handleDelete(event) {
+    fetch("http://localhost:8080/rest/directors/" + event, {
+      method: "delete"
+    }).then(response =>
+      response.json().then(json => {
+        return json;
+      })
+    );
+    window.location.reload();
   }
 
   render() {
@@ -32,9 +43,17 @@ export default class GetDirectors extends React.Component {
           <td>{director.birthDate}</td>
           <td>{director.birthPlace}</td>
           <td>
-            <FiX
+            <FiPenTool
+              style={{ cursor: "pointer", color: "blue" }}
+              name='update'
+              onClick={this.handleUpdate}
+            />
+            |
+            <FiTrash2
               style={{ cursor: "pointer", color: "red" }}
-              onClick={this.handleClick}
+              name='delete'
+              onChange={this.handleChange}
+              onClick={() => this.handleDelete(director.id)}
             />
           </td>
         </tr>
@@ -49,7 +68,7 @@ export default class GetDirectors extends React.Component {
                 <th> Surname </th>
                 <th> Birth Date </th>
                 <th> Birth Place </th>
-                <th> Delete </th>
+                <th> Actions </th>
               </tr>
             </thead>
             <tbody>{directors}</tbody>

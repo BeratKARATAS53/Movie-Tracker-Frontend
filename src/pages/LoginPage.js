@@ -34,7 +34,7 @@ class LoginPage extends Component {
     event.preventDefault();
     var self = this;
     axios
-      .post("http://localhost:8030/rest/login", {
+      .post("http://localhost:8080/rest/login", {
         username: this.state.username,
         password: this.state.password
       })

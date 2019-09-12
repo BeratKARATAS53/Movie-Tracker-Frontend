@@ -39,16 +39,12 @@ export default class UpdateMovie extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8030/rest/movies")
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ movieData: data, status: "SUCCESS" });
-      });
+    console.log(this.state.movieData);
   }
 
   handleSubmit() {
     axios
-      .post("http://localhost:8030/rest/movies", {
+      .post("http://localhost:8080/rest/movies", {
         movieName: this.state.movieName,
         duration: this.state.duration,
         directorId: this.state.directorId,
@@ -94,7 +90,7 @@ export default class UpdateMovie extends Component {
               className='form-item'
               placeholder='Duration goes here...'
               name='duration'
-              type='text'
+              type='number'
               onChange={this.handleChange}
             />
             <input

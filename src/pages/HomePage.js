@@ -2,7 +2,6 @@ import axios from "axios";
 
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { DropdownButton, Dropdown } from "react-bootstrap";
 
 import "../assests/css/Form.css";
 import "../assests/css/Button.css";
@@ -13,7 +12,7 @@ export default class HomePage extends Component {
     this.state = {
       value: "",
       status: "LOADING",
-      selected: ""
+      movies: ""
     };
     this.handleLogout = this.handleLogout.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -33,10 +32,13 @@ export default class HomePage extends Component {
   handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:8030/rest/search", {
+      .post("http://localhost:8080/rest/search", {
         movie: this.state.value
       })
-      .then(this.setState({ status: "SUCCESS" }))
+      .then(data => {
+        this.setState({ movies: data, status: "SUCCESS" });
+        console.log(this.state.movies);
+      })
       .catch(function(error) {
         console.log(error);
       });
@@ -44,6 +46,10 @@ export default class HomePage extends Component {
 
   render() {
     if (this.state.status === "SUCCESS") {
+      if (localStorage.getItem("token") === null) {
+        alert("Yetkisiz Giriş Tespit Edildi! Giriş Reddedildi.");
+        return <Redirect to='/rest/login' />;
+      }
       return <Redirect to='/rest/search' />;
     }
     return (
@@ -53,17 +59,10 @@ export default class HomePage extends Component {
             textAlign: "center"
           }}
         >
-          {/* <DropdownButton
-              value={this.state.selected}
-              title='Categories'
-              onChange={this.handleChange}
-            >
-              <Dropdown.Item as='button'> User </Dropdown.Item>
-              <Dropdown.Item as='button'> Movie </Dropdown.Item>
-              <Dropdown.Item as='button'> Director </Dropdown.Item>
-            </DropdownButton> */}
+          <br />
+          <br />
           <input
-            className='form-item col-3 form-custom-color'
+            className='form-search-item col-3 form-custom-color'
             placeholder='Search movie name goes here...'
             name='value'
             type='text'
@@ -83,43 +82,6 @@ export default class HomePage extends Component {
         >
           <button
             className='navbar-button'
-            style={{ margin: 25 }}
-            onClick={() => {
-              this.props.history.push("/");
-            }}
-          >
-            Home
-          </button>
-          <button
-            className='navbar-button'
-            style={{ margin: 25 }}
-            onClick={() => {
-              this.props.history.push("/rest/login");
-            }}
-          >
-            Login
-          </button>
-          <button
-            className='navbar-button'
-            style={{ margin: 25 }}
-            onClick={() => {
-              this.props.history.push("/rest/users/add");
-            }}
-          >
-            Add User
-          </button>
-          <button
-            className='navbar-button'
-            style={{ margin: 25 }}
-            onClick={() => {
-              this.props.history.push("/rest/movies");
-            }}
-          >
-            Movies
-          </button>
-          <button
-            className='navbar-button'
-            style={{ margin: 25 }}
             onClick={() => {
               this.props.history.push("/rest/users");
             }}
@@ -128,7 +90,14 @@ export default class HomePage extends Component {
           </button>
           <button
             className='navbar-button'
-            style={{ margin: 25 }}
+            onClick={() => {
+              this.props.history.push("/rest/movies");
+            }}
+          >
+            Movies
+          </button>
+          <button
+            className='navbar-button'
             onClick={() => {
               this.props.history.push("/rest/directors");
             }}
@@ -138,8 +107,6 @@ export default class HomePage extends Component {
           <button
             className='navbar-button'
             style={{
-              margin: 25,
-              marginLeft: 350,
               background: "linear-gradient(to right, #bc4e9c, #f80759)"
             }}
             onClick={this.handleLogout}

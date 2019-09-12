@@ -39,15 +39,6 @@ export default class UsersPage extends React.Component {
               className='navbar-button'
               style={{ margin: 25 }}
               onClick={() => {
-                this.props.history.push("/rest/users/delete");
-              }}
-            >
-              Delete User
-            </button>
-            <button
-              className='navbar-button'
-              style={{ margin: 25 }}
-              onClick={() => {
                 this.props.history.push("/rest/users/update");
               }}
             >

@@ -47,15 +47,6 @@ export default class MoviesPage extends React.Component {
               className='navbar-button'
               style={{ margin: 25 }}
               onClick={() => {
-                this.props.history.push("/rest/movies/delete");
-              }}
-            >
-              Delete Movie
-            </button>
-            <button
-              className='navbar-button'
-              style={{ margin: 25 }}
-              onClick={() => {
                 this.props.history.push("/rest/movies/update");
               }}
             >

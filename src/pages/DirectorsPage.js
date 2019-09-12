@@ -39,15 +39,6 @@ export default class DirectorsPage extends React.Component {
               className='navbar-button'
               style={{ margin: 25 }}
               onClick={() => {
-                this.props.history.push("/rest/directors/delete");
-              }}
-            >
-              Delete Director
-            </button>
-            <button
-              className='navbar-button'
-              style={{ margin: 25 }}
-              onClick={() => {
                 this.props.history.push("/rest/directors/update");
               }}
             >

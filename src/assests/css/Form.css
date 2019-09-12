@@ -78,3 +78,12 @@
 .form-custom-color {
   background: linear-gradient(to right, #c9d6ff, #e2e2e2);
 }
+
+.form-search-item {
+  font-family: "Raleway", serif;
+  padding: 5px;
+  margin-bottom: 2rem;
+  height: 40px;
+  width: 26rem;
+  border: none;
+}

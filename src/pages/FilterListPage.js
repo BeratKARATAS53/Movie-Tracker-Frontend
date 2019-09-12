@@ -1,33 +1,26 @@
 import React from "react";
 
 import { Table } from "react-bootstrap";
-import { FiX } from "react-icons/fi";
 
 import "../assests/css/Button.css";
 import "../assests/css/Form.css";
 import "../assests/css/Table.css";
 
-export default class GetMovies extends React.Component {
+export default class FilterListPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "movies",
       movies: "",
       status: "LOADING"
     };
-    this.handleClick = this.handleClick.bind(this);
   }
+
   componentDidMount() {
-    fetch("http://localhost:8030/rest/search")
+    fetch("http://localhost:8080/rest/search")
       .then(response => response.json())
       .then(data => {
         this.setState({ movies: data, status: "SUCCESS" });
       });
-  }
-
-  handleClick() {
-    let path = `/`;
-    this.props.history.push(path);
   }
 
   render() {
@@ -42,12 +35,6 @@ export default class GetMovies extends React.Component {
           <td>{movie.imdbRate}</td>
           <td>{movie.duration}</td>
           <td>{movie.genre}</td>
-          <td>
-            <FiX
-              style={{ cursor: "pointer", color: "red" }}
-              onClick={this.handleClick}
-            />
-          </td>
         </tr>
       ));
       return (
@@ -61,7 +48,6 @@ export default class GetMovies extends React.Component {
                 <th> IMDB Rate </th>
                 <th> Duration </th>
                 <th> Genre </th>
-                <th> Delete </th>
               </tr>
             </thead>
             <tbody>{movies}</tbody>
