@@ -1,26 +1,49 @@
-import axios from "axios";
+import React from "react";
 
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Carousel } from "react-bootstrap";
 
-import "../assests/css/Form.css";
+import Header from "./Header";
+import Footer from "./Footer";
+
+import "react-datepicker/dist/react-datepicker.css";
 import "../assests/css/Button.css";
+import "../assests/css/Container.css";
+import "../assests/css/Form.css";
+import "../assests/css/Table.css";
+import pic1 from "../img/wall1.jpeg";
 
-export default class HomePage extends Component {
-  constructor() {
-    super();
+export default class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      value: "",
+      page: "movies",
+      movie: "",
+      movieList: "",
+      movieId: "",
       status: "LOADING",
-      movies: ""
+      update: "",
+      delete: "",
+      startDate: new Date(),
+      show: false,
+      setShow: false
     };
-    this.handleLogout = this.handleLogout.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleShow = this.handleShow.bind(this);
   }
 
-  handleLogout() {
-    localStorage.clear();
+  handleClose = () => this.setState({ setShow: false });
+  handleShow = () => this.setState({ setShow: true });
+
+  componentDidMount() {
+    fetch("http://localhost:8080/rest/movies")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ movieList: data, status: "SUCCESS" });
+      });
   }
 
   handleChange(event) {
@@ -29,92 +52,149 @@ export default class HomePage extends Component {
     });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    axios
-      .post("http://localhost:8080/rest/search", {
-        movie: this.state.value
-      })
+  handleClick() {
+    let path = `/rest/movies`;
+    this.props.history.push(path);
+  }
+
+  handleUpdate(event) {
+    fetch("http://localhost:8080/rest/movies/" + event)
+      .then(response => response.json())
       .then(data => {
-        this.setState({ movies: data, status: "SUCCESS" });
-        console.log(this.state.movies);
-      })
-      .catch(function(error) {
-        console.log(error);
+        this.setState({ movie: data });
       });
+    this.handleShow();
+  }
+
+  handleDelete(event) {
+    fetch("http://localhost:8080/rest/movies/" + event, {
+      method: "delete"
+    }).then(response =>
+      response.json().then(json => {
+        return json;
+      })
+    );
+    window.location.reload();
   }
 
   render() {
-    if (this.state.status === "SUCCESS") {
-      if (localStorage.getItem("token") === null) {
-        alert("Yetkisiz Giriş Tespit Edildi! Giriş Reddedildi.");
-        return <Redirect to='/rest/login' />;
-      }
-      return <Redirect to='/rest/search' />;
-    }
-    return (
-      <div className='topCenter mx-5 px-5 mt-md-2'>
-        <form
-          style={{
-            textAlign: "center"
-          }}
-        >
-          <br />
-          <br />
-          <input
-            className='form-search-item col-3 form-custom-color'
-            placeholder='Search movie name goes here...'
-            name='value'
-            type='text'
-            onChange={this.handleChange}
-          />
-          <button
-            className='btn btn-primary'
-            style={{ height: 50 }}
-            onClick={this.handleSubmit}
-          >
-            Search
-          </button>
-        </form>
+    if (this.state.status !== "SUCCESS") {
+      return <div>{this.state.status}</div>;
+    } else {
+      var movieList = this.state.movieList.map(movie => (
         <div
-          className='row-4 h-25 w-100 text-center align-middle border'
-          style={{ cursor: "pointer", fontSize: 20 }}
+          style={{
+            width: "30%",
+            minWidth: "100p",
+            position: "relative",
+            fontSize: 18
+          }}
+          className='mt-2 mb-3 pb-2 px-2 pt-3'
+          key={movie.id}
         >
-          <button
-            className='navbar-button'
-            onClick={() => {
-              this.props.history.push("/rest/users");
-            }}
-          >
-            Users
-          </button>
-          <button
-            className='navbar-button'
-            onClick={() => {
-              this.props.history.push("/rest/movies");
-            }}
-          >
-            Movies
-          </button>
-          <button
-            className='navbar-button'
-            onClick={() => {
-              this.props.history.push("/rest/directors");
-            }}
-          >
-            Directors
-          </button>
-          <button
-            className='navbar-button'
-            style={{
-              background: "linear-gradient(to right, #bc4e9c, #f80759)"
-            }}
-            onClick={this.handleLogout}
-          >
-            Logout
-          </button>
+          <div className='card-body'>
+            <img
+              style={{
+                width: "100%",
+                height: "50%",
+                cursor: "pointer"
+              }}
+              className='mx-auto mt-2'
+              src={pic1}
+              alt='Images Not Found!'
+            />
+            <div className='mr-2'>
+              <strong> {movie.movieName} </strong>
+              <br />
+              <strong> Release Date: </strong>
+              {movie.releaseDate}
+              <br />
+              <strong> Imdb Rate: </strong>
+              {movie.imdbRate}
+              <br />
+              <strong> Genre: </strong>
+              {movie.genre}
+            </div>
+            <br />
+            <div
+              style={{ bottom: 0, width: "%100" }}
+              className='row justify-content-center'
+            >
+              <button type='button' className='btn btn-dark ml-2 w-75'>
+                Go To Movie Page
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    );
+      ));
+      return (
+        <div className='topCenter'>
+          <Header />
+          <Carousel>
+            <Carousel.Item>
+              <img
+                className='d-block w-50 mx-auto my-3'
+                style={{ cursor: "pointer" }}
+                src='https://i.ytimg.com/vi/xytQx3MgBnM/maxresdefault.jpg'
+                alt='First slide'
+                onClick={() =>
+                  window.open("https://www.imdb.com/title/tt4154796/")
+                }
+              />
+              <Carousel.Caption>
+                <h3> AVENGERS 4 </h3>
+                <p> Release Date: 22 April 2019 </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className='d-block w-50 mx-auto my-3'
+                style={{ cursor: "pointer" }}
+                src='http://d.merhabahaber.com/news/683628.jpg'
+                alt='Second slide'
+                onClick={() =>
+                  window.open(
+                    "https://www.imdb.com/title/tt3371366/?ref_=nv_sr_1?ref_=nv_sr_1"
+                  )
+                }
+              />
+              <Carousel.Caption>
+                <h3> TRANFORMERS 5 </h3>
+                <p> Release Date: 26 September 2017 </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className='d-block w-50 mx-auto my-3'
+                style={{ cursor: "pointer" }}
+                src='https://www.burakgoc.com/wp-content/uploads/2015/02/H%C4%B1zl%C4%B1-ve-%C3%96fkeli-Tokyo-Yar%C4%B1%C5%9F%C4%B1.jpg'
+                alt='Third slide'
+                onClick={() =>
+                  window.open(
+                    "https://www.imdb.com/title/tt0463985/?ref_=nv_sr_1?ref_=nv_sr_1"
+                  )
+                }
+              />
+              <Carousel.Caption>
+                <h3> FAST & FURIOUS: TOKYO DRIFT </h3>
+                <p> Release Date: 16 June 2006 </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+          <div className='row'>
+            <div className='col-1'></div>
+            <div className='col-10 container-body'>
+              <br />
+              <div>
+                <div className='row justify-content-center'>
+                  {movieList.length > 0 ? movieList : "No movie found"}
+                </div>
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      );
+    }
   }
 }

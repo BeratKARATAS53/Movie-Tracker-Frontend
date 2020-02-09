@@ -1,10 +1,14 @@
 import React from "react";
-import { FiPenTool, FiTrash2 } from "react-icons/fi";
-import { Table } from "react-bootstrap";
 
+import Header from "../pages/Header";
+import Footer from "../pages/Footer";
+
+import "react-datepicker/dist/react-datepicker.css";
 import "../assests/css/Button.css";
-import "../assests/css/Table.css";
+import "../assests/css/Container.css";
 import "../assests/css/Form.css";
+import "../assests/css/Table.css";
+import pic1 from "../img/wall1.jpeg";
 
 export default class GetUsers extends React.Component {
   constructor(props) {
@@ -36,7 +40,7 @@ export default class GetUsers extends React.Component {
   handleClick() {
     console.log("handle CLick");
 
-    let path = `/rest/movies`;
+    let path = `/rest/users`;
     this.props.history.push(path);
   }
 
@@ -45,57 +49,71 @@ export default class GetUsers extends React.Component {
       return <div>{this.state.status}</div>;
     } else {
       var users = this.state.users.map(user => (
-        <tr key={user.id} style={{ textAlign: "center" }}>
-          <td>{user.id}</td>
-          <td>{user.username}</td>
-          <td>{user.firstName}</td>
-          <td>{user.lastName}</td>
-          <td>{user.email}</td>
-          <td>
-            <FiPenTool
-              style={{ cursor: "pointer", color: "blue" }}
-              name='update'
-              onClick={this.handleUpdate}
+        <div
+          style={{
+            width: "30%",
+            position: "relative",
+            fontSize: 18
+          }}
+          className='mt-2 mb-3 pb-2 px-2 pt-3'
+          key={user.id}
+        >
+          <div className='card-body'>
+            <img
+              style={{
+                width: "100%",
+                height: 200,
+                cursor: "pointer"
+              }}
+              className='mx-auto mt-2'
+              src={pic1}
+              alt='Images Not Found!'
             />
-            |
-            <FiTrash2
-              style={{ cursor: "pointer", color: "red" }}
-              name='delete'
-              onChange={this.handleChange}
-              onClick={() => this.handleDelete(user.id)}
-            />
-          </td>
-        </tr>
+            <div className='mr-2'>
+              <strong> {user.username} </strong>
+              <br />
+              <strong> First Name: </strong>
+              {user.firstName}
+              <br />
+              <strong> Last Name: </strong>
+              {user.lastName}
+              <br />
+              <strong> E-mail: </strong>
+              {user.email}
+            </div>
+            <br />
+            <div
+              style={{ bottom: 0, width: "%100" }}
+              className='row justify-content-center'
+            >
+              <button type='button' className='btn btn-dark ml-2 w-75'>
+                Go To User Page
+              </button>
+            </div>
+          </div>
+        </div>
       ));
       return (
-        <div className='center' style={{ fontSize: 25 }}>
-          <Table striped bordered hover size='sm'>
-            <thead>
-              <tr className='table-tr'>
-                <th>#</th>
-                <th> Username </th>
-                <th> First Name </th>
-                <th> Last Name </th>
-                <th> Email </th>
-                <th> Actions </th>
-              </tr>
-            </thead>
-            <tbody>{users}</tbody>
-          </Table>
-
-          <button
-            className='navbar-button'
-            style={{
-              margin: 25,
-              height: 50,
-              background: "linear-gradient(to right, #bc4e9c, #f80759)"
-            }}
-            onClick={() => {
-              this.props.history.push("/rest/users");
-            }}
-          >
-            Return Page
-          </button>
+        <div className='topCenter'>
+          <Header />
+          <br />
+          <br />
+          <br />
+          <br />
+          <div className='container'>
+            <div className='row'>
+              <div className='col-1'></div>
+              <div className='col-12 container-body'>
+                <br />
+                <div>
+                  <div className='row justify-content-center'>
+                    {users.length > 0 ? users : "No User Found!"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Footer />
         </div>
       );
     }

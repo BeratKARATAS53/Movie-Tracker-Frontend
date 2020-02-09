@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../assests/css/Button.css";
 import "../assests/css/Form.css";
+import "../assests/css/Table.css";
 
 export default class UpdateMovie extends Component {
   constructor(props) {

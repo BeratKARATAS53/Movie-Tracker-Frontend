@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Carousel } from "react-bootstrap";
+
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -8,10 +10,9 @@ import "../assests/css/Button.css";
 import "../assests/css/Container.css";
 import "../assests/css/Form.css";
 import "../assests/css/Table.css";
-
 import pic1 from "../img/wall1.jpeg";
 
-export default class MoviePage extends React.Component {
+export default class Deneme extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,7 +95,7 @@ export default class MoviePage extends React.Component {
           <div className='card-body'>
             <img
               style={{
-                width: "100%",
+                width: "95%",
                 height: "50%",
                 cursor: "pointer"
               }}
@@ -119,7 +120,7 @@ export default class MoviePage extends React.Component {
               style={{ bottom: 0, width: "%100" }}
               className='row justify-content-center'
             >
-              <button type='button' className='btn btn-dark ml-2 w-75'>
+              <button type='button' className='btn btn-primary ml-2'>
                 Go To Movie Page
               </button>
             </div>
@@ -129,115 +130,60 @@ export default class MoviePage extends React.Component {
       return (
         <div className='topCenter'>
           <Header />
-          <br />
-          <br />
+          <Carousel>
+            <Carousel.Item>
+              <img
+                className='d-block w-50 mx-auto my-3'
+                style={{ cursor: "pointer" }}
+                src='https://i.ytimg.com/vi/xytQx3MgBnM/maxresdefault.jpg'
+                alt='First slide'
+                onClick={() =>
+                  window.open("https://www.imdb.com/title/tt4154796/")
+                }
+              />
+              <Carousel.Caption>
+                <h3> AVENGERS 4 </h3>
+                <p> Release Date: 22 April 2019 </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className='d-block w-50 mx-auto my-3'
+                style={{ cursor: "pointer" }}
+                src='http://d.merhabahaber.com/news/683628.jpg'
+                alt='Second slide'
+                onClick={() =>
+                  window.open(
+                    "https://www.imdb.com/title/tt3371366/?ref_=nv_sr_1?ref_=nv_sr_1"
+                  )
+                }
+              />
+              <Carousel.Caption>
+                <h3> TRANFORMERS 5 </h3>
+                <p> Release Date: 26 September 2017 </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className='d-block w-50 mx-auto my-3'
+                style={{ cursor: "pointer" }}
+                src='https://www.burakgoc.com/wp-content/uploads/2015/02/H%C4%B1zl%C4%B1-ve-%C3%96fkeli-Tokyo-Yar%C4%B1%C5%9F%C4%B1.jpg'
+                alt='Third slide'
+                onClick={() =>
+                  window.open(
+                    "https://www.imdb.com/title/tt0463985/?ref_=nv_sr_1?ref_=nv_sr_1"
+                  )
+                }
+              />
+              <Carousel.Caption>
+                <h3> FAST & FURIOUS: TOKYO DRIFT </h3>
+                <p> Release Date: 16 June 2006 </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
           <div className='row'>
-            <div className='col-3 ml-4 mr-4 pt-4 container-leftside-body'>
-              <h3 className='ml-1' style={{ color: "white" }}>
-                GENRES
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Action
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Science-Fiction
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Race
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Based-Story
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Documentary
-                </a>
-              </h3>
-              <br />
-              <h3 className='ml-1' style={{ color: "white" }}>
-                DIRECTORS
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Director 1
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Director 2
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Director 3
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Director 4
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Director 5
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Director 6
-                </a>
-                <br />
-                <a
-                  className='ml-3'
-                  href='/rest/search'
-                  style={{ color: "#add100" }}
-                >
-                  Director 7
-                </a>
-              </h3>
-            </div>
-            <div className='col-8  container-body'>
+            <div className='col-1'></div>
+            <div className='col-10 container-body'>
               <br />
               <div>
                 <div className='row justify-content-center'>

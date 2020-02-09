@@ -39,7 +39,7 @@ export default class FilterListPage extends React.Component {
       ));
       return (
         <div className='center' style={{ fontSize: 25 }}>
-          <Table bordered hover size='sm'>
+          <Table striped bordered hover size='sm' variant='dark'>
             <thead>
               <tr className='table-tr'>
                 <th> # </th>

@@ -72,7 +72,7 @@ export default class UpdateUser extends Component {
           <form>
             <input
               className='form-item'
-              placeholder='User Name goes here...'
+              placeholder={this.props.movie}
               name='username'
               type='text'
               onChange={this.handleChange}

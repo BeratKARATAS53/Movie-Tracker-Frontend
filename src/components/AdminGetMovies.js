@@ -1,17 +1,16 @@
-import axios from "axios";
-
 import React from "react";
 
-import { Redirect } from "react-router-dom";
-
-import { Table } from "react-bootstrap";
+import { Table, Modal } from "react-bootstrap";
 import { FiPenTool, FiTrash2 } from "react-icons/fi";
 
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 import "../assests/css/Button.css";
 import "../assests/css/Form.css";
 import "../assests/css/Table.css";
 
-export default class GetMovies extends React.Component {
+export default class AdminGetMovies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,13 +20,22 @@ export default class GetMovies extends React.Component {
       movieId: "",
       status: "LOADING",
       update: "",
-      delete: ""
+      delete: "",
+      startDate: new Date(),
+      show: false,
+      setShow: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleShow = this.handleShow.bind(this);
   }
+
+  handleClose = () => this.setState({ setShow: false });
+  handleShow = () => this.setState({ setShow: true });
+
   componentDidMount() {
     fetch("http://localhost:8080/rest/movies")
       .then(response => response.json())
@@ -52,9 +60,8 @@ export default class GetMovies extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ movie: data });
-        console.log(this.state.movie);
       });
-    return <Redirect to='/rest/movies/update' />;
+    this.handleShow();
   }
 
   handleDelete(event) {
@@ -82,15 +89,14 @@ export default class GetMovies extends React.Component {
           <td>{movie.genre}</td>
           <td>
             <FiPenTool
-              style={{ cursor: "pointer", color: "blue" }}
+              style={{ cursor: "pointer", color: "#00b4db" }}
               name='update'
               onClick={() => this.handleUpdate(movie.id)}
             />
             |
             <FiTrash2
-              style={{ cursor: "pointer", color: "red" }}
+              style={{ cursor: "pointer", color: "#f80759" }}
               name='delete'
-              onChange={this.handleChange}
               onClick={() => this.handleDelete(movie.id)}
             />
           </td>
@@ -98,7 +104,7 @@ export default class GetMovies extends React.Component {
       ));
       return (
         <div className='center' style={{ fontSize: 25 }}>
-          <Table bordered hover size='sm'>
+          <Table striped bordered hover size='sm' variant='dark'>
             <thead>
               <tr className='table-tr'>
                 <th> # </th>
@@ -126,6 +132,65 @@ export default class GetMovies extends React.Component {
           >
             Return Page
           </button>
+          <Modal show={this.state.setShow} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title style={{ alignSelf: "center" }}>
+                Update Movie
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form>
+                <input
+                  className='form-item-fixed'
+                  placeholder={"Movie Name goes here..."}
+                  name='movieName'
+                  type='text'
+                  onChange={this.handleChange}
+                />
+                <h5>Release Date</h5>
+                <DatePicker
+                  className='form-item-fixed'
+                  selected={this.state.startDate}
+                  onChange={this.handleDateChange}
+                />
+                <input
+                  className='form-item-fixed'
+                  placeholder='Duration goes here...'
+                  name='duration'
+                  type='number'
+                  onChange={this.handleChange}
+                />
+                <input
+                  className='form-item-fixed'
+                  placeholder='IMDB Rate goes here...'
+                  name='imdbRate'
+                  type='number'
+                  pattern='[0-9]*'
+                  onChange={this.handleChange}
+                />
+                <input
+                  className='form-item-fixed'
+                  placeholder='Genre Name goes here...'
+                  name='genre'
+                  type='text'
+                  onChange={this.handleChange}
+                />
+                <input
+                  className='form-item-fixed'
+                  placeholder='Director Id goes here...'
+                  name='directorId'
+                  type='number'
+                  onChange={this.handleChange}
+                />
+                <input
+                  className='form-submit'
+                  value='SUBMIT'
+                  type='submit'
+                  onClick={this.handleSubmit}
+                />
+              </form>
+            </Modal.Body>
+          </Modal>
         </div>
       );
     }

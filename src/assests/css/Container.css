@@ -1,0 +1,12 @@
+.container-body {
+  background: #343a40;
+}
+
+.card-body {
+  background: linear-gradient(to right, #add100, #7b920a);
+}
+
+.container-leftside-body {
+  background: #343a40;
+  color: #add100;
+}

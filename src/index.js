@@ -8,11 +8,11 @@ import UsersPage from "./pages/UsersPage";
 import MoviesPage from "./pages/MoviesPage";
 import DirectorsPage from "./pages/DirectorsPage";
 import FilterListPage from "./pages/FilterListPage";
+import Deneme from "./pages/Deneme";
 
 import AddUser from "./components/AddUser";
 import GetUsers from "./components/GetUsers";
 import AddMovie from "./components/AddMovie";
-import GetMovies from "./components/GetMovies";
 import GetDirectors from "./components/GetDirectors";
 import AddDirector from "./components/AddDirector";
 import UpdateMovie from "./components/UpdateMovie";
@@ -20,6 +20,10 @@ import UpdateMovie from "./components/UpdateMovie";
 import "./assests/css/index.css";
 import "./assests/css/Form.css";
 import * as serviceWorker from "./serviceWorker";
+import "bootstrap/dist/css/bootstrap.min.css";
+import AdminGetUsers from "./components/AdminGetUsers";
+import AdminGetMovies from "./components/AdminGetMovies";
+import AdminGetDirectors from "./components/AdminGetDirectors";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -29,13 +33,17 @@ ReactDOM.render(
     <Route path='/rest/users/get' component={GetUsers} />
     <Route path='/rest/users/add' component={AddUser} />
     <Route path='/rest/movies' component={MoviesPage} />
-    <Route path='/rest/movies/get' component={GetMovies} />
     <Route path='/rest/movies/add' component={AddMovie} />
     <Route path='/rest/movies/update' component={UpdateMovie} />
     <Route path='/rest/directors' component={DirectorsPage} />
     <Route path='/rest/directors/get' component={GetDirectors} />
     <Route path='/rest/directors/add' component={AddDirector} />
     <Route path='/rest/search' component={FilterListPage} />
+    <Route path='/rest/deneme' component={Deneme} />
+
+    <Route path='/admin/users' component={AdminGetUsers} />
+    <Route path='/admin/movies' component={AdminGetMovies} />
+    <Route path='/admin/directors' component={AdminGetDirectors} />
   </BrowserRouter>,
   document.getElementById("root")
 );

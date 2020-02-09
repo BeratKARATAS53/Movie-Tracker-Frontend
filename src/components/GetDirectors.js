@@ -1,10 +1,13 @@
 import React from "react";
-import { FiPenTool, FiTrash2 } from "react-icons/fi";
-import { Table } from "react-bootstrap";
+
+import Header from "../pages/Header";
+import Footer from "../pages/Footer";
 
 import "../assests/css/Table.css";
 import "../assests/css/Button.css";
 import "../assests/css/Form.css";
+
+import pic1 from "../img/wall1.jpeg";
 
 export default class GetDirectors extends React.Component {
   constructor(props) {
@@ -36,56 +39,72 @@ export default class GetDirectors extends React.Component {
       return <div>{this.state.status}</div>;
     } else {
       var directors = this.state.directors.map(director => (
-        <tr key={director.id} style={{ textAlign: "center" }}>
-          <td>{director.id}</td>
-          <td>{director.directorName}</td>
-          <td>{director.directorSurname}</td>
-          <td>{director.birthDate}</td>
-          <td>{director.birthPlace}</td>
-          <td>
-            <FiPenTool
-              style={{ cursor: "pointer", color: "blue" }}
-              name='update'
-              onClick={this.handleUpdate}
+        <div
+          style={{
+            width: "34%",
+            position: "relative",
+            fontSize: 18
+          }}
+          className='mt-2 mb-3 pb-2 px-2 pt-3'
+          key={director.id}
+        >
+          <div className='card-body'>
+            <img
+              style={{
+                width: "100%",
+                height: 300,
+                cursor: "pointer"
+              }}
+              className='mx-auto mt-2'
+              src={pic1}
+              alt='Images Not Found!'
             />
-            |
-            <FiTrash2
-              style={{ cursor: "pointer", color: "red" }}
-              name='delete'
-              onChange={this.handleChange}
-              onClick={() => this.handleDelete(director.id)}
-            />
-          </td>
-        </tr>
+            <div className='mr-2'>
+              <strong> Director Name: </strong>
+              {director.directorName}
+              <br />
+              <strong> Director Surname: </strong>
+              {director.directorSurname}
+              <br />
+              <strong> Birth Date: </strong>
+              {director.birthDate}
+              <br />
+              <strong> Birth Place: </strong>
+              {director.birthPlace}
+            </div>
+            <br />
+            <div
+              style={{ bottom: 0, width: "%100" }}
+              className='row justify-content-center'
+            >
+              <button type='button' className='btn btn-dark ml-2 w-75'>
+                Go To Director Page
+              </button>
+            </div>
+          </div>
+        </div>
       ));
       return (
-        <div className='center' style={{ fontSize: 25 }}>
-          <Table striped bordered hover size='sm'>
-            <thead>
-              <tr className='table-tr'>
-                <th>#</th>
-                <th> Name </th>
-                <th> Surname </th>
-                <th> Birth Date </th>
-                <th> Birth Place </th>
-                <th> Actions </th>
-              </tr>
-            </thead>
-            <tbody>{directors}</tbody>
-          </Table>
-          <button
-            className='navbar-button'
-            style={{
-              margin: 25,
-              height: 50,
-              background: "linear-gradient(to right, #bc4e9c, #f80759)"
-            }}
-            onClick={() => {
-              this.props.history.push("/rest/directors");
-            }}
-          >
-            Return Page
-          </button>
+        <div className='topCenter'>
+          <Header />
+          <br />
+          <br />
+          <br />
+          <br />
+          <div className='container'>
+            <div className='row'>
+              <div className='col-1'></div>
+              <div className='col-12 container-body'>
+                <br />
+                <div>
+                  <div className='row justify-content-center'>
+                    {directors.length > 0 ? directors : "No Director Found!"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Footer />
         </div>
       );
     }
